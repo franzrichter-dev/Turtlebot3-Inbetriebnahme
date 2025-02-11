@@ -160,4 +160,53 @@ ein.
 
 Auf dem Host-PC, geben Sie in einem Linux oder WSL Terminal den Befehl `roscore` ein. Wenn dies keine Fehlermeldung ausgibt und sehr schnell startet, dann hat alles funktioniert. Andernfalls gibt es möglicherweise einen Konfigurationsfehler. Sie können veruchen, noch einmal den Befehl `source ~/.bashrc` auszuführen. Eventuell müssen Sie noch die fehlenden Packete für ROS installieren, die in der Fehlermeldung erwähnt wurden. Die entsprechenden Befehle müssten mit einer Google-Suche zu finden sein.
 
-Kopieren
+Kopieren Sie [diese Datei](https://github.com/franzrichter-dev/Turtlebot3-Inbetriebnahme/blob/master/util_turtlebot.tar) auf den Turtlebot. Dies können Sie mit diesem Befehl machen (bei Windows und Linux):
+```
+scp <Pfad der util_turtlebot.tar Datei> pi@<IP-Adresse des Turtlebots>:~/util_turtlebot.tar
+```
+
+Danach müssen Sie wieder das Passwort des Turtlebots eingeben (`raspberry`).
+
+Starten Sie eine SSH-Session mit dem Turtlebot und führen Sie folgende Befehle auf ihm aus:
+```
+cd ~
+tar -xvzf util_turtlebot.tar util
+sudo chmod 755 ~/util/launch_bringup.sh
+sudo chmod 755 ~/util/restart_network.sh
+```
+
+Nun haben Sie einige weitere unterstützende Skripte im Ordner `~/util`.
+
+Wenn Sie den Befehl `roscore` auf dem Host-PC erfolgreich ausgeführt haben, dann können Sie das Skript `~/util/launch_bringup.sh` mit dem Befehl `bash ~/util/launch_bringup.sh` ausführen. Das andere Skript im Ordner `~/util` startet das Internet des Turtlebots neu, was beim Konfigurieren der IP-Adressen nützlich sein kann. Um es auszuführen, geben Sie bei Bedarf `bash ~/util/restart_network.sh` ein.
+
+Wenn `roscore` und `launch_bringup.sh` auf dem Host-PC und dem Turtlebot gleichzeitig ohne Fehler läuft, dann können Sie den rc100-Controller einschalten und müssten damit den Turtlebot steuern können.
+## 3. Videos aufnehmen und ansehen
+
+Mit den Befehlen `bash ~/Desktop/start_experiment.sh` und `bash ~/Desktop/stop_experiment.sh` auf dem Turtlebot können Sie eine Videoaufnahme starten und stoppen. Die Ergebnisse werden in einem Unterordner mit der Systemzeit in Millisekunden im Ordner `~/Desktop` gespeichert. Sie können den Inhalt des Desktop-Ordners mit dem Befehl `ls -a ~/Desktop` ansehen. Navigieren Sie in diesen Ordner mit dem Befehl `cd ~/Desktop/<Ordnername>`. Kopieren Sie die Datei mit der Endung `.h264` in den Home-Ordner:
+```
+ls -a
+<Ergebnis:> xxxxxxxxx.h264  start_experiment.sh
+<Fangen Sie an die erste Zahl der .h264-Datei zu schreiben und drücken Sie dann die TAB-Taste, wenn Sie diesen Dateinamen schreiben möchten.>
+cp xxxxxxxxx.h264 ~/video.h264
+```
+
+Vom Host-PC aus können Sie wieder mit `scp` das Video kopieren:
+```
+scp pi@<IP-Adresse des Turtlebots>:~/video.h264 <Pfad, zu dem das Video kopiert werden soll>/video.h264
+```
+
+Geben Sie wieder das Passwort für den Turtlebot ein.
+
+Um das Video jetzt auf dem Host-PC anzusehen, benötigen Sie den zugriff auf eine grafische Oberfläche, wenn Sie also WSL verwenden, dann sollten Sie die folgenden Schritten nicht auf WSL, sondern direkt bei Windows ausführen.
+
+Installieren Sie [FFmpeg](https://www.ffmpeg.org/).
+
+Führen Sie dann den Befehl `ffplay -f <Pfad zum Video auf dem Host-PC>/video.h264` aus und es sollte ein Fenster erscheinen, in dem Sie das Video anschauen können.
+## 4. SLAM
+
+Mit [SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node) können Sie die Lidardaten des Turtlebots live ansehen. Führen Sie dazu `roscore` auf dem Host-PC und `bash ~/util/launch_bringup.sh` auf dem Turtlebot aus. Öffnen Sie dann ein zweites Terminal auf dem Host-PC und führen Sie die Befehle 
+```
+sudo apt install ros-noetic-slam-karto
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=karto
+```
+aus. Es öffnet sich ein Fenster, in dem Sie die Lidardaten des Turtlebots sehen können. Es müssten auch die Wände und andere Hindernisse angezeigt werden.
