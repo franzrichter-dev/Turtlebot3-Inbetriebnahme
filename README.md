@@ -207,6 +207,6 @@ Führen Sie dann den Befehl `ffplay -f <Pfad zum Video auf dem Host-PC>/video.h2
 Mit [SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node) können Sie die Lidardaten des Turtlebots live ansehen. Führen Sie dazu `roscore` auf dem Host-PC und `bash ~/util/launch_bringup.sh` auf dem Turtlebot aus. Öffnen Sie dann ein zweites Terminal auf dem Host-PC und führen Sie die Befehle 
 ```
 sudo apt install ros-noetic-slam-karto
-roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=karto
+roslaunch turtlebot3_slam turtlebot3_slam.launch
 ```
 aus. Es öffnet sich ein Fenster, in dem Sie die Lidardaten des Turtlebots sehen können. Es müssten auch die Wände und andere Hindernisse angezeigt werden.
