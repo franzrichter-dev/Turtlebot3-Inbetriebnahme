@@ -101,7 +101,15 @@ Wenn der `Raspberry PI` neu gestartet ist, dann kann auf ihn mit SSH zugegriffen
 
 Zum Installieren von ROS kann [dieser Link](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup) weiter helfen.
 
-Außerdem gibt es im Ordner `util` in diesem Repository ein Skript, was automatisch ROS und alle benötigten Pakete installiert. Dazu kann man es einfach auf dem Linux-System Klonen und das Skript ausführen.
+Führen Sie den Befehl `sudo nano /etc/apt/sources.list` aus und fügen Sie die folgende Zeile am Ende der Datei hinzu:
+
+```
+deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main
+```
+
+Verlassen Sie dann den Editor mit `STRG+X > y > ENTER`.
+
+Im Ordner `util` in diesem Repository gibt es ein Skript, was automatisch ROS und alle benötigten Pakete installiert. Dazu kann man es einfach auf dem Linux-System Klonen und das Skript ausführen.
 
 ```bash
   cd ~
@@ -111,7 +119,7 @@ Außerdem gibt es im Ordner `util` in diesem Repository ein Skript, was automati
   bash util/install_ros.sh
 ```
 
-Der Installationsprozess dauert eine Weile und manchmal muss etwas mit dem Drücken der "y"-Taste bestätigt werden.    
+Der Installationsprozess dauert eine Weile und manchmal muss etwas mit dem Drücken der "y"-Taste bestätigt werden.
 
 Danach muss in einem Linux-Terminal oder bei WSL etwas konfiguriert werden: geben Sie `sudo nano ~/.bashrc` ein und scrollen Sie bis zum Ende der Datei. Falls noch nicht vorhanden, fügen Sie folgendes hinzu:
 ```
