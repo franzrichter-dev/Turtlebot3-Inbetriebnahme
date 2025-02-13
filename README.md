@@ -101,14 +101,6 @@ Wenn der `Raspberry PI` neu gestartet ist, dann kann auf ihn mit SSH zugegriffen
 
 Zum Installieren von ROS kann [dieser Link](https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup) weiter helfen.
 
-Führen Sie den Befehl `sudo nano /etc/apt/sources.list` aus und fügen Sie die folgende Zeile am Ende der Datei hinzu:
-
-```
-deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main
-```
-
-Verlassen Sie dann den Editor mit `STRG+X > y > ENTER`.
-
 Im Ordner `util` in diesem Repository gibt es ein Skript, was automatisch ROS und alle benötigten Pakete installiert. Dazu kann man es einfach auf dem Linux-System Klonen und das Skript ausführen.
 
 ```bash
@@ -210,6 +202,7 @@ Um das Video jetzt auf dem Host-PC anzusehen, benötigen Sie den zugriff auf ein
 Installieren Sie [FFmpeg](https://www.ffmpeg.org/).
 
 Führen Sie dann den Befehl `ffplay -f <Pfad zum Video auf dem Host-PC>/video.h264` aus und es sollte ein Fenster erscheinen, in dem Sie das Video anschauen können.
+
 ## 4. SLAM
 
 Mit [SLAM](https://emanual.robotis.com/docs/en/platform/turtlebot3/slam/#run-slam-node) können Sie die Lidardaten des Turtlebots live ansehen. Führen Sie dazu `roscore` auf dem Host-PC und `bash ~/util/launch_bringup.sh` auf dem Turtlebot aus. Öffnen Sie dann ein zweites Terminal auf dem Host-PC und führen Sie die Befehle 
@@ -218,3 +211,7 @@ sudo apt install ros-noetic-slam-karto
 roslaunch turtlebot3_slam turtlebot3_slam.launch
 ```
 aus. Es öffnet sich ein Fenster, in dem Sie die Lidardaten des Turtlebots sehen können. Es müssten auch die Wände und andere Hindernisse angezeigt werden.
+
+## 5. Information zur Steuerung mit Python Skripten oder Tastatur
+
+Auf dem von mir verwendeten Turtlebot war "ROS-Kinetic" installiert, auf dem Host-PC "ROS-Noetic". Bedienung mit dem rc100 funktioniert mit dieser Konfiguration, für die Steuerung mit Skripten muss allerdings die ROS-Version von einer der beiden Geräte umgestellt werden.
